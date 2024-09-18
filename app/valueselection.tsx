@@ -15,7 +15,7 @@ const valuesList = [
 ];
 
 export default function ValueSelectionScreen({ navigation, formData }) {
-  const [selectedValues, setSelectedValues] = useState([]);
+/*  const [selectedValues, setSelectedValues] = useState([]);
 
   const toggleValue = (value) => {
     setSelectedValues((prev) =>
@@ -47,10 +47,35 @@ export default function ValueSelectionScreen({ navigation, formData }) {
       const responseData = await response.json();
       console.log('Data submitted successfully:', responseData);
       Alert.alert('Success', 'Your data has been submitted!');
+
+      navigation.navigate('VideoSelection');
+
     } catch (error) {
       console.error('Error submitting data:', error);
       Alert.alert('Error', 'Failed to submit data. Please try again.');
     }
+  };*/
+  const [selectedValues, setSelectedValues] = useState([]);
+
+  const toggleValue = (value) => {
+    setSelectedValues((prev) =>
+      prev.includes(value)
+        ? prev.filter((v) => v !== value)
+        : [...prev, value]
+    );
+  };
+
+  const handleNext = () => {
+    if (selectedValues.length < 5) {
+      Alert.alert('Please select at least 5 values.');
+      return;
+    }
+
+    const finalData = { ...formData, values: selectedValues };
+    console.log(finalData); // Log the data for now
+
+    // Navigate to the VideoSelectionScreen without backend submission
+    navigation.navigate('VideoSelection');
   };
 
   return (
